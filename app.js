@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan");
 
 // express app
 const app = express();
@@ -9,13 +10,17 @@ app.set("view engine", "ejs");
 // listen for request
 app.listen(3000);
 
+//middleware & static files
+app.use(express.static("public"));
+app.use(morgan("dev"));
+
 app.get("/", (req, res) => {
     const blogs = [
         {title: "Yoshi finds eggs", snippet: "Lorem ipsum"},
         {title: "Mario finds stars", snippet: "Lorem ipsum"},
         {title: "How to defeat Bowser", snippet: "Lorem ipsum"},
     ];
-    res.render("index", { title: "Home" });
+    res.render("index", { title: "Home", blogs });
 });
 
 app.get("/about", (req, res) => {
